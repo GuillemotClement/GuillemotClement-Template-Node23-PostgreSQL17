@@ -7,6 +7,7 @@ services:
       - database
     volumes:
       - ./backend:/app
+      - /app/node_modules
 
   database:
     image: postgres:16
