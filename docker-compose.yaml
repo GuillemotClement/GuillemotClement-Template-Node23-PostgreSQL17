@@ -10,16 +10,24 @@ services:
       - /app/node_modules
 
   database:
-    image: postgres:16
+    image: postgres:17
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: ro0tPass
-      POSTGRES_DB: hubcook
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
 
 volumes:
   postgres_data:
